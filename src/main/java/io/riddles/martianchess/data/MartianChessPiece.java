@@ -1,7 +1,7 @@
 package io.riddles.martianchess.data;
 
 import io.riddles.martianchess.model.ChessPieceColor;
-import io.riddles.martianchess.model.ChessPieceType;
+import io.riddles.martianchess.model.MartianChessPieceType;
 
 /**
  * ${PACKAGE_NAME}
@@ -13,29 +13,27 @@ import io.riddles.martianchess.model.ChessPieceType;
  *
  * @author Niko
  */
-public class ChessPiece {
-    ChessPieceType type;
+public class MartianChessPiece {
+    MartianChessPieceType type;
     ChessPieceColor color;
     private boolean hasMoved;
-    private boolean previousDoublePush;
 
-    public ChessPiece(ChessPieceType type, ChessPieceColor color) {
+    public MartianChessPiece(MartianChessPieceType type, ChessPieceColor color) {
         this.type = type;
         this.color = color;
     }
 
-    public ChessPiece(ChessPiece piece) {
+    public MartianChessPiece(MartianChessPiece piece) {
         this.hasMoved = piece.hasMoved();
         this.color = piece.getColor();
         this.type = piece.getType();
-        this.previousDoublePush = piece.hadPreviousDoublePush();
     }
 
     public Boolean hasColor(ChessPieceColor color) {
         return this.color == color;
     }
 
-    public Boolean hasType(ChessPieceType type) {
+    public Boolean hasType(MartianChessPieceType type) {
         return this.type == type;
     }
 
@@ -43,14 +41,11 @@ public class ChessPiece {
         return this.color;
     }
 
-    public ChessPieceType getType() {
+    public MartianChessPieceType getType() {
         return this.type;
     }
 
     public void setMoved() { this.hasMoved = true; }
     public boolean hasMoved() { return this.hasMoved; }
-    public void setDoublePush() { this.previousDoublePush = true; }
-    public boolean hadPreviousDoublePush() { return this.previousDoublePush; }
-    /* TODO: reset double push automatically */
 
 }

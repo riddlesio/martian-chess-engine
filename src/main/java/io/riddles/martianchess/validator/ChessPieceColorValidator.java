@@ -1,8 +1,8 @@
 package io.riddles.martianchess.validator;
 
-import io.riddles.martianchess.data.ChessPiece;
+import io.riddles.martianchess.data.MartianChessPiece;
 import io.riddles.martianchess.game.state.MartianChessState;
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ValidationResult;
 import io.riddles.martianchess.model.*;
 
@@ -19,15 +19,15 @@ import io.riddles.martianchess.model.*;
 public class ChessPieceColorValidator extends ChessPieceMoveValidator implements MoveValidator<MartianChessState> {
 
     @Override
-    public Boolean isApplicable(ChessMove move, MartianChessState state) {
+    public Boolean isApplicable(MartianChessMove move, MartianChessState state) {
 
         return true;
     }
 
     @Override
-    public ValidationResult validate(ChessMove move, MartianChessState state) {
+    public ValidationResult validate(MartianChessMove move, MartianChessState state) {
 
-        ChessPiece piece = state.getBoard().getFieldAt(move.getFrom());
+        MartianChessPiece piece = state.getBoard().getFieldAt(move.getFrom());
         if (piece.getColor() == getPlayerColor(state.getPlayerId())) {
             return new ValidationResult(true, "");
         }

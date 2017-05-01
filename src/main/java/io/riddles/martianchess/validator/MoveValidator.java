@@ -1,6 +1,6 @@
 package io.riddles.martianchess.validator;
 
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ValidationResult;
 
 /**
@@ -15,7 +15,7 @@ import io.riddles.martianchess.model.ValidationResult;
  */
 public interface MoveValidator<S> {
 
-    Boolean isApplicable(ChessMove move, S state);
+    Boolean isApplicable(MartianChessMove move, S state);
 
-    ValidationResult validate(ChessMove move, S state);
+    ValidationResult validate(MartianChessMove move, S state);
 }

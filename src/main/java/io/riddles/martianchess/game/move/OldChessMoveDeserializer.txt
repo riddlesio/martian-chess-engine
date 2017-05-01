@@ -1,6 +1,6 @@
 package io.riddles.martianchess.game.move;
 
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ChessPieceType;
 import io.riddles.javainterface.exception.InvalidInputException;
 

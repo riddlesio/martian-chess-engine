@@ -1,12 +1,9 @@
 package io.riddles.martianchess.validator;
 
-import io.riddles.martianchess.data.MartianChessPiece;
 import io.riddles.martianchess.game.state.MartianChessState;
-import io.riddles.martianchess.model.ChessPieceColor;
-import io.riddles.martianchess.model.ChessPieceType;
-import io.riddles.martianchess.model.MartianChessPieceType;
 import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ValidationResult;
+import io.riddles.martianchess.model.*;
 
 import java.awt.*;
 
@@ -20,18 +17,18 @@ import java.awt.*;
  *
  * @author Niko
  */
-public class PawnMoveValidator extends ChessPieceMoveValidator implements MoveValidator<MartianChessState> {
+public class DroneMoveValidator extends ChessPieceMoveValidator implements MoveValidator<MartianChessState> {
 
     @Override
     public Boolean isApplicable(MartianChessMove move, MartianChessState state) {
 
-        return this.isMovedPieceOfType(move, state.getBoard(), MartianChessPieceType.PAWN);
+        return this.isMovedPieceOfType(move, state.getBoard(), MartianChessPieceType.DRONE);
     }
 
     @Override
     public ValidationResult validate(MartianChessMove move, MartianChessState state) {
 
-        // Pawns move one space diagonally in any direction. (Unlike chess pawns, they may move backwards.)
+        // Drones move one or two spaces horizontally or vertically, without jumping. (Like chess rooks, but with limited range.)
 
         Point from = move.getFrom();
         Point to = move.getTo();
@@ -39,12 +36,14 @@ public class PawnMoveValidator extends ChessPieceMoveValidator implements MoveVa
         int deltaX = Math.abs(to.x - from.x);
         int deltaY = Math.abs(to.y - from.y);
 
-        MartianChessPiece chessPiece = (MartianChessPiece) state.getBoard().getFieldAt(from);
-        ChessPieceColor pieceColor = chessPiece.getColor();
+        int maxDelta = deltaX;
+        if (deltaY > deltaX) maxDelta = deltaY;
+
+        boolean straightMove = false;
+        if (deltaX == 0 || deltaY == 0) straightMove = true;
 
         boolean isValid = false;
-
-        if (deltaX == deltaY && deltaX == 1) {
+        if (straightMove && maxDelta <= 2) {
             isValid = true;
         }
 
@@ -52,6 +51,6 @@ public class PawnMoveValidator extends ChessPieceMoveValidator implements MoveVa
             return new ValidationResult(true, "");
         }
 
-        return new ValidationResult(false, "The pawn can only move one space diagonally.");
+        return new ValidationResult(false, "Drones move one or two spaces horizontally or vertically");
     }
 }

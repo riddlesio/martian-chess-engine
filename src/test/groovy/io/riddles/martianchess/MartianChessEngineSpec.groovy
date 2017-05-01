@@ -25,15 +25,17 @@ package io.riddles.martianchess
 
 import io.riddles.martianchess.engine.MartianChessEngine
 import io.riddles.martianchess.game.player.ChessPlayer
-import io.riddles.martianchess.game.processor.ChessProcessor
 import io.riddles.javainterface.game.player.PlayerProvider
 import io.riddles.javainterface.game.state.AbstractState
 import io.riddles.javainterface.io.FileIOHandler
+import io.riddles.martianchess.game.processor.MartianChessProcessor
 import io.riddles.martianchess.game.state.MartianChessState
+import spock.lang.Ignore
 import spock.lang.Specification
 
 
-class ChessEngineSpec extends Specification {
+
+class MartianChessEngineSpec extends Specification {
 
     public static class TestEngine extends MartianChessEngine {
 
@@ -45,8 +47,8 @@ class ChessEngineSpec extends Specification {
 
 
 
-    //@Ignore
-    def "test if ChessEngine is created"() {
+    @Ignore
+    def "test if MartianChessEngine is created 1"() {
 
         setup:
         String[] botInputs = new String[2]
@@ -66,11 +68,40 @@ class ChessEngineSpec extends Specification {
         AbstractState initialState = engine.willRun()
         AbstractState finalState = engine.run(initialState);
         engine.didRun(initialState, finalState);
-        ChessProcessor processor = engine.getProcessor();
+        MartianChessProcessor processor = engine.getProcessor();
 
         expect:
         finalState instanceof MartianChessState;
         finalState.getBoard().toString() == ".,0,.,.,.,.,.,.,1,.,.,.,.,.,.,0,1,.,.,.,.,.,1,0,1,.,.,.,1,1,0,0,.,.,.,0,1,0,0,0,.,.";
         processor.getWinnerId(finalState) == 0;
+    }
+
+    //@Ignore
+    def "test NoJumpingMoveValidator"() {
+
+        setup:
+        String[] botInputs = new String[2]
+
+        def wrapperInput = "./src/test/resources/wrapper_input_oneround.txt"
+        botInputs[0] = "./src/test/resources/bot_input_nojumping.txt"
+        botInputs[1] = "./src/test/resources/bot2_input.txt"
+
+        PlayerProvider<ChessPlayer> playerProvider = new PlayerProvider<>();
+        ChessPlayer player1 = new ChessPlayer(0);
+        player1.setIoHandler(new FileIOHandler(botInputs[0])); playerProvider.add(player1);
+        ChessPlayer player2 = new ChessPlayer(1);
+        player2.setIoHandler(new FileIOHandler(botInputs[1])); playerProvider.add(player2);
+
+        def engine = new TestEngine(playerProvider, wrapperInput)
+
+        AbstractState initialState = engine.willRun()
+        AbstractState finalState = engine.run(initialState);
+        engine.didRun(initialState, finalState);
+        MartianChessProcessor processor = engine.getProcessor();
+
+        expect:
+        finalState instanceof MartianChessState;
+        finalState.getBoard().toString() == "Q,Q,.,D,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,q,.,p,p,d,.,p,d,.,.,d,q,q";
+        processor.getWinnerId(finalState) == null;
     }
 }

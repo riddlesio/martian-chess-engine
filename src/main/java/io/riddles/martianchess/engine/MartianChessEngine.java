@@ -1,12 +1,12 @@
 package io.riddles.martianchess.engine;
 
-import io.riddles.martianchess.data.ChessBoard;
+import io.riddles.martianchess.data.MartianChessBoard;
 import io.riddles.martianchess.game.ChessSerializer;
 import io.riddles.martianchess.game.player.ChessPlayer;
-import io.riddles.martianchess.game.processor.ChessLogic;
-import io.riddles.martianchess.game.processor.ChessProcessor;
+import io.riddles.martianchess.game.processor.MartianChessLogic;
+import io.riddles.martianchess.game.processor.MartianChessProcessor;
 import io.riddles.martianchess.game.state.MartianChessState;
-import io.riddles.martianchess.game.state.ChessPlayerState;
+import io.riddles.martianchess.game.state.MartianChessPlayerState;
 import io.riddles.javainterface.configuration.Configuration;
 import io.riddles.javainterface.engine.AbstractEngine;
 import io.riddles.javainterface.engine.GameLoopInterface;
@@ -18,7 +18,7 @@ import io.riddles.javainterface.io.IOHandler;
 import java.util.ArrayList;
 
 /**
- * This class is the connecting instance between the Chess game and the
+ * This class is the connecting instance between the MartianChess game and the
  * encapsulating framework. It should implement all methods required for
  * the Riddles.io framework to retrieve the necessary game data.
  *
@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * @author Niko van Meurs <niko@riddles.io>
  */
 
-public class MartianChessEngine extends AbstractEngine<ChessProcessor, ChessPlayer, MartianChessState> {
+public class MartianChessEngine extends AbstractEngine<MartianChessProcessor, ChessPlayer, MartianChessState> {
 
     public MartianChessEngine(PlayerProvider<ChessPlayer> playerProvider, IOHandler ioHandler) throws TerminalException {
         super(playerProvider, ioHandler);
@@ -47,8 +47,8 @@ public class MartianChessEngine extends AbstractEngine<ChessProcessor, ChessPlay
     protected Configuration getDefaultConfiguration() {
         Configuration configuration = new Configuration();
         configuration.put("maxRounds", 200); /* Note: in the previous version of Block Battle, maxRounds was set to -1 */
-        configuration.put("field_height", 8); /* Note: in the previous version of Block Battle, maxRounds was set to -1 */
-        configuration.put("field_width", 8); /* Note: in the previous version of Block Battle, maxRounds was set to -1 */
+        configuration.put("field_height", 8);
+        configuration.put("field_width", 4);
         return configuration;
     }
 
@@ -57,9 +57,9 @@ public class MartianChessEngine extends AbstractEngine<ChessProcessor, ChessPlay
      * returns: a Processor
      */
     @Override
-    protected ChessProcessor createProcessor() {
+    protected MartianChessProcessor createProcessor() {
 
-        return new ChessProcessor(playerProvider);
+        return new MartianChessProcessor(playerProvider);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class MartianChessEngine extends AbstractEngine<ChessProcessor, ChessPlay
         player.sendSetting("max_rounds", configuration.getInt("maxRounds"));
         player.sendSetting("player_names", playerNames);
         player.sendSetting("your_bot", player.getName());
-        player.sendSetting("your_color", new ChessLogic().getPlayerColor(player.getId()).toString().toLowerCase());
+        player.sendSetting("your_color", new MartianChessLogic().getPlayerColor(player.getId()).toString().toLowerCase());
     }
 
 
@@ -100,20 +100,20 @@ public class MartianChessEngine extends AbstractEngine<ChessProcessor, ChessPlay
      */
     @Override
     protected MartianChessState getInitialState() {
-        ArrayList<ChessPlayerState> playerStates = new ArrayList<>();
-        ChessBoard board = new ChessBoard(configuration.getInt("fieldWidth"), (configuration.getInt("fieldHeight")));
+        ArrayList<MartianChessPlayerState> playerStates = new ArrayList<>();
+        MartianChessBoard board = new MartianChessBoard(configuration.getInt("fieldWidth"), (configuration.getInt("fieldHeight")));
         board.setFieldsFromString(
-                "R,N,B,Q,K,B,N,R," +
-                "P,P,P,P,P,P,P,P," +
-                ".,.,.,.,.,.,.,.," +
-                ".,.,.,.,.,.,.,.," +
-                ".,.,.,.,.,.,.,.," +
-                ".,.,.,.,.,.,.,.," +
-                "p,p,p,p,p,p,p,p," +
-                "r,n,b,q,k,b,n,r" );
+                "Q,Q,D,.," +
+                "Q,D,P,.," +
+                "D,P,P,.," +
+                ".,.,.,.," +
+                ".,.,.,.," +
+                ".,p,p,d," +
+                ".,p,d,q," +
+                ".,d,q,q" );
 
         for (ChessPlayer player : playerProvider.getPlayers()) {
-            ChessPlayerState playerState = new ChessPlayerState(player.getId());
+            MartianChessPlayerState playerState = new MartianChessPlayerState(player.getId());
             playerStates.add(playerState);
         }
 

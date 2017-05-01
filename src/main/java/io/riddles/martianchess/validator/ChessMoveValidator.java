@@ -2,9 +2,9 @@ package io.riddles.martianchess.validator;
 
 import io.riddles.martianchess.game.state.MartianChessState;
 import io.riddles.martianchess.model.ValidationResult;
-import io.riddles.martianchess.data.ChessBoard;
-import io.riddles.martianchess.data.ChessPiece;
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.data.MartianChessBoard;
+import io.riddles.martianchess.data.MartianChessPiece;
+import io.riddles.martianchess.move.MartianChessMove;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -30,29 +30,26 @@ public final class ChessMoveValidator implements MoveValidator<MartianChessState
         validators.add(new FromNotEmptyValidator());
         validators.add(new ToEmptyOrOppositePlayerValidator());
         validators.add(new ChessPieceColorValidator());
-        validators.add(new BishopMoveValidator());
-        validators.add(new KingMoveValidator());
-        validators.add(new KnightMoveValidator());
+        validators.add(new DroneMoveValidator());
         validators.add(new PawnMoveValidator());
         validators.add(new QueenMoveValidator());
-        validators.add(new RookMoveValidator());
 
         this.validators = validators;
     }
 
     @Override
-    public Boolean isApplicable(ChessMove move, MartianChessState state) {
+    public Boolean isApplicable(MartianChessMove move, MartianChessState state) {
 
         return true;
     }
 
     @Override
-    public ValidationResult validate(ChessMove move, MartianChessState state) {
-        ChessBoard board = state.getBoard();
+    public ValidationResult validate(MartianChessMove move, MartianChessState state) {
+        MartianChessBoard board = state.getBoard();
 
         //get the piece at the from location
         Point from = move.getFrom();
-        ChessPiece fromPiece = board.getFieldAt(from);
+        MartianChessPiece fromPiece = board.getFieldAt(from);
 
         boolean result = true;
         for (MoveValidator validator : validators) {

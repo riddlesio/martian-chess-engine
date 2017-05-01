@@ -19,8 +19,8 @@
 
 package io.riddles.martianchess.game;
 
-import io.riddles.martianchess.game.state.ChessStateSerializer;
-import io.riddles.martianchess.game.processor.ChessProcessor;
+import io.riddles.martianchess.game.processor.MartianChessProcessor;
+import io.riddles.martianchess.game.state.MartianChessStateSerializer;
 import io.riddles.martianchess.game.state.MartianChessState;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,20 +33,20 @@ import io.riddles.javainterface.game.AbstractGameSerializer;
  *
  * @author Joost - joost@riddles.io, Jim van Eeden - jim@riddles.io
  */
-public class ChessSerializer extends AbstractGameSerializer<ChessProcessor, MartianChessState> {
+public class ChessSerializer extends AbstractGameSerializer<MartianChessProcessor, MartianChessState> {
 
     public ChessSerializer() {
         super();
     }
 
     @Override
-    public String traverseToString(ChessProcessor processor, MartianChessState initialState) {
+    public String traverseToString(MartianChessProcessor processor, MartianChessState initialState) {
         JSONObject game = new JSONObject();
 
         game = addDefaultJSON(initialState, game, processor);
 
         // put all states
-        ChessStateSerializer serializer = new ChessStateSerializer();
+        MartianChessStateSerializer serializer = new MartianChessStateSerializer();
         JSONArray states = new JSONArray();
 
         // DIRTY FIX BECAUSE OF THIS STUPID ASS TurnBasedGameLoop

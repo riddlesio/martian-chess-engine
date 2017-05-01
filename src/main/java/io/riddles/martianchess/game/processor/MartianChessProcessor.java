@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import io.riddles.martianchess.game.player.ChessPlayer;
 import io.riddles.martianchess.game.state.MartianChessState;
 import io.riddles.martianchess.move.ActionType;
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.move.ChessMoveDeserializer;
-import io.riddles.martianchess.game.state.ChessPlayerState;
+import io.riddles.martianchess.game.state.MartianChessPlayerState;
 import io.riddles.javainterface.engine.AbstractEngine;
 import io.riddles.javainterface.game.player.PlayerProvider;
 import io.riddles.javainterface.game.processor.PlayerResponseProcessor;
@@ -15,15 +15,15 @@ import io.riddles.javainterface.game.state.AbstractPlayerState;
 import io.riddles.javainterface.io.PlayerResponse;
 
 /**
- * io.riddles.Chess.game.processor.ChessProcessor - Created on 6/27/16
+ * io.riddles.MartianChess.game.processor.MartianChessProcessor - Created on 6/27/16
  *
  * [description]
  *
  * @author Joost - joost@riddles.io, Jim van Eeden - jim@riddles.io
  */
-public class ChessProcessor extends PlayerResponseProcessor<MartianChessState, ChessPlayer> {
+public class MartianChessProcessor extends PlayerResponseProcessor<MartianChessState, ChessPlayer> {
 
-    public ChessProcessor(PlayerProvider<ChessPlayer> playerProvider) {
+    public MartianChessProcessor(PlayerProvider<ChessPlayer> playerProvider) {
         super(playerProvider);
     }
 
@@ -31,29 +31,22 @@ public class ChessProcessor extends PlayerResponseProcessor<MartianChessState, C
     public MartianChessState createNextStateFromResponse(MartianChessState state, PlayerResponse input, int roundNumber) {
 
         /* Clone playerStates for next State */
-        ArrayList<ChessPlayerState> nextPlayerStates = clonePlayerStates(state.getPlayerStates());
+        ArrayList<MartianChessPlayerState> nextPlayerStates = clonePlayerStates(state.getPlayerStates());
         MartianChessState nextState = new MartianChessState(state, nextPlayerStates, roundNumber);
         nextState.setPlayerId(input.getPlayerId());
 
         ChessMoveDeserializer moveDeserializer = new ChessMoveDeserializer();
-        ChessMove move = moveDeserializer.traverse(input.getValue());
-        ChessPlayerState playerState = getActivePlayerState(nextPlayerStates, input.getPlayerId());
+        MartianChessMove move = moveDeserializer.traverse(input.getValue());
+        MartianChessPlayerState playerState = getActivePlayerState(nextPlayerStates, input.getPlayerId());
         playerState.setMove(move);
 
-        if(move.moveType == ChessMove.MoveTypes.Castling  ){
-            if( move.isKingCastle() ){
-                System.out.println("King side Castling");
-            } else {
-                System.out.println("Queen side Castling");
-            }
 
-        }
         // parse the response
         if (move.getException() != null) {
             System.out.println("EXCEPTION '" + input.getValue() + "' " + move.getException().toString());
         }
 
-        ChessLogic logic = new ChessLogic();
+        MartianChessLogic logic = new MartianChessLogic();
         logic.executeMove(nextState, playerState);
 
         nextState.getBoard().dump();
@@ -62,17 +55,17 @@ public class ChessProcessor extends PlayerResponseProcessor<MartianChessState, C
         return nextState;
     }
 
-    private ChessPlayerState getActivePlayerState(ArrayList<ChessPlayerState> playerStates, int id) {
-        for (ChessPlayerState playerState : playerStates) {
+    private MartianChessPlayerState getActivePlayerState(ArrayList<MartianChessPlayerState> playerStates, int id) {
+        for (MartianChessPlayerState playerState : playerStates) {
             if (playerState.getPlayerId() == id) { return playerState; }
         }
         return null;
     }
 
-    private ArrayList<ChessPlayerState> clonePlayerStates(ArrayList<ChessPlayerState> playerStates) {
-        ArrayList<ChessPlayerState> nextPlayerStates = new ArrayList<>();
-        for (ChessPlayerState playerState : playerStates) {
-            ChessPlayerState nextPlayerState = playerState.clone();
+    private ArrayList<MartianChessPlayerState> clonePlayerStates(ArrayList<MartianChessPlayerState> playerStates) {
+        ArrayList<MartianChessPlayerState> nextPlayerStates = new ArrayList<>();
+        for (MartianChessPlayerState playerState : playerStates) {
+            MartianChessPlayerState nextPlayerState = playerState.clone();
             nextPlayerStates.add(nextPlayerState);
         }
         return nextPlayerStates;

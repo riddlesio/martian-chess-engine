@@ -1,9 +1,9 @@
 package io.riddles.martianchess.validator;
 
-import io.riddles.martianchess.data.ChessBoard;
-import io.riddles.martianchess.data.ChessPiece;
-import io.riddles.martianchess.model.ChessPieceType;
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.data.MartianChessBoard;
+import io.riddles.martianchess.data.MartianChessPiece;
+import io.riddles.martianchess.model.MartianChessPieceType;
+import io.riddles.martianchess.move.MartianChessMove;
 
 /**
  * ${PACKAGE_NAME}
@@ -18,8 +18,8 @@ import io.riddles.martianchess.move.ChessMove;
 public abstract class ChessPieceMoveValidator {
 
 
-    protected Boolean isMovedPieceOfType(ChessMove move, ChessBoard board, ChessPieceType pieceType) {
-        ChessPiece piece = board.getFieldAt(move.getFrom());
+    protected Boolean isMovedPieceOfType(MartianChessMove move, MartianChessBoard board, MartianChessPieceType pieceType) {
+        MartianChessPiece piece = board.getFieldAt(move.getFrom());
         return piece.hasType(pieceType);
     }
 }

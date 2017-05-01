@@ -20,7 +20,7 @@
 
 package io.riddles.martianchess.game.state;
 
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.javainterface.game.state.AbstractStateSerializer;
 import org.json.JSONObject;
 
@@ -32,7 +32,7 @@ import org.json.JSONObject;
  *
  * @author Joost - joost@riddles.io, Jim van Eeden - jim@riddles.io
  */
-public class ChessStateSerializer extends AbstractStateSerializer<MartianChessState> {
+public class MartianChessStateSerializer extends AbstractStateSerializer<MartianChessState> {
 
     @Override
     public String traverseToString(MartianChessState state) {
@@ -47,14 +47,14 @@ public class ChessStateSerializer extends AbstractStateSerializer<MartianChessSt
     private JSONObject visitState(MartianChessState state) throws NullPointerException {
         JSONObject stateJSON = new JSONObject();
 
-        ChessPlayerState playerState = state.getPlayerStateById(state.getPlayerId());
+        MartianChessPlayerState playerState = state.getPlayerStateById(state.getPlayerId());
         stateJSON.put("field", state.getBoard().toString());
         stateJSON.put("player", state.getPlayerId());
 
 
         stateJSON.put("round", state.getRoundNumber());
 
-        ChessMove move = playerState.getMove();
+        MartianChessMove move = playerState.getMove();
         String exceptionString = "";
         if (move != null && move.getException() != null) {
             exceptionString = move.getException().getMessage();

@@ -1,26 +1,26 @@
 package io.riddles.martianchess.game.processor;
 
-import io.riddles.martianchess.data.ChessBoard;
-import io.riddles.martianchess.game.state.ChessPlayerState;
+import io.riddles.martianchess.data.MartianChessBoard;
+import io.riddles.martianchess.game.state.MartianChessPlayerState;
 import io.riddles.martianchess.game.state.MartianChessState;
 import io.riddles.martianchess.model.ChessPieceColor;
 import io.riddles.martianchess.model.ValidationResult;
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.validator.ChessMoveValidator;
 
 /**
  * Created by joost on 4/21/17.
  */
-public class ChessLogic {
+public class MartianChessLogic {
     /**
      * Takes a BlockBattleState and applies the move(s).
      * Returns nothing, but transforms the given BlockBattleState.
      */
-    public static void executeMove(MartianChessState state, ChessPlayerState playerState) {
-        ChessBoard board = state.getBoard();
+    public static void executeMove(MartianChessState state, MartianChessPlayerState playerState) {
+        MartianChessBoard board = state.getBoard();
         int playerId = playerState.getPlayerId();
 
-        ChessMove move = playerState.getMove();
+        MartianChessMove move = playerState.getMove();
         ChessMoveValidator validator = new ChessMoveValidator();
         ValidationResult vr = validator.validate(move, state);
         if (vr.isValid()) {

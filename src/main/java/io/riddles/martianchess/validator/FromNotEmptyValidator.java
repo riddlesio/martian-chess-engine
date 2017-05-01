@@ -1,10 +1,10 @@
 package io.riddles.martianchess.validator;
 
-import io.riddles.martianchess.data.ChessBoard;
-import io.riddles.martianchess.data.ChessPiece;
+import io.riddles.martianchess.data.MartianChessBoard;
+import io.riddles.martianchess.data.MartianChessPiece;
 import io.riddles.martianchess.game.state.MartianChessState;
 import io.riddles.martianchess.model.ValidationResult;
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 
 import java.awt.*;
 
@@ -21,16 +21,16 @@ import java.awt.*;
 public class FromNotEmptyValidator extends ChessPieceMoveValidator implements MoveValidator<MartianChessState> {
 
     @Override
-    public Boolean isApplicable(ChessMove move, MartianChessState state) {
+    public Boolean isApplicable(MartianChessMove move, MartianChessState state) {
         return true;
     }
 
     @Override
-    public ValidationResult validate(ChessMove move, MartianChessState state) {
+    public ValidationResult validate(MartianChessMove move, MartianChessState state) {
 
         Point from = move.getFrom();
-        ChessBoard board = state.getBoard();
-        ChessPiece piece = board.getFieldAt(from);
+        MartianChessBoard board = state.getBoard();
+        MartianChessPiece piece = board.getFieldAt(from);
 
         boolean isValid = piece != null;
         if (isValid) {

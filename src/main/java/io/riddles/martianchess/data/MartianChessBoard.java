@@ -3,6 +3,7 @@ package io.riddles.martianchess.data;
 import io.riddles.martianchess.model.ChessPieceColor;
 import io.riddles.martianchess.model.ChessPieceType;
 import io.riddles.javainterface.game.data.Board;
+import io.riddles.martianchess.model.MartianChessPieceType;
 
 import java.awt.*;
 
@@ -10,28 +11,28 @@ import java.awt.*;
 /**
  * Created by joost on 4/18/17.
  */
-public class ChessBoard extends Board<ChessPiece>{
+public class MartianChessBoard extends Board<MartianChessPiece>{
     public static final String EMPTY_FIELD = ".";
 
 
-    public ChessBoard(int width, int height) {
+    public MartianChessBoard(int width, int height) {
         super(width, height);
 
-        fields = new ChessPiece[width][height];
+        fields = new MartianChessPiece[width][height];
         clear();
     }
 
-    public ChessBoard(int width, int height, String initialBoard) {
+    public MartianChessBoard(int width, int height, String initialBoard) {
         super(width, height);
 
-        fields = new ChessPiece[width][height];
+        fields = new MartianChessPiece[width][height];
         clear();
         setFieldsFromString(initialBoard);
     }
 
-    public ChessBoard(ChessBoard board) {
+    public MartianChessBoard(MartianChessBoard board) {
         super(board.getWidth(), board.getHeight());
-        fields = new ChessPiece[width][height];
+        fields = new MartianChessPiece[width][height];
         clear();
         /* TODO: Clone better. */
         setFieldsFromString(board.toString());
@@ -50,7 +51,7 @@ public class ChessBoard extends Board<ChessPiece>{
         String[] split = input.split(",");
         int x = 0;
         int y = 0;
-        this.fields = new ChessPiece[width][height];
+        this.fields = new MartianChessPiece[width][height];
         for(int c = 0; c < split.length; c++) {
             String fieldString = split[c];
             this.fields[x][y] = this.fieldFromString(fieldString);
@@ -64,68 +65,44 @@ public class ChessBoard extends Board<ChessPiece>{
     }
 
     /* Return a Piece, or null if unable to parse or empty. */
-    public ChessPiece fieldFromString(String input) {
+    public MartianChessPiece fieldFromString(String input) {
         switch (input) {
-            case "R":
-                return new ChessPiece(ChessPieceType.ROOK, ChessPieceColor.BLACK);
-            case "N":
-                return new ChessPiece(ChessPieceType.KNIGHT, ChessPieceColor.BLACK);
-            case "B":
-                return new ChessPiece(ChessPieceType.BISHOP, ChessPieceColor.BLACK);
-            case "K":
-                return new ChessPiece(ChessPieceType.KING, ChessPieceColor.BLACK);
             case "Q":
-                return new ChessPiece(ChessPieceType.QUEEN, ChessPieceColor.BLACK);
+                return new MartianChessPiece(MartianChessPieceType.QUEEN, ChessPieceColor.BLACK);
+            case "D":
+                return new MartianChessPiece(MartianChessPieceType.DRONE, ChessPieceColor.BLACK);
             case "P":
-                return new ChessPiece(ChessPieceType.PAWN, ChessPieceColor.BLACK);
-            case "r":
-                return new ChessPiece(ChessPieceType.ROOK, ChessPieceColor.WHITE);
-            case "n":
-                return new ChessPiece(ChessPieceType.KNIGHT, ChessPieceColor.WHITE);
-            case "b":
-                return new ChessPiece(ChessPieceType.BISHOP, ChessPieceColor.WHITE);
-            case "k":
-                return new ChessPiece(ChessPieceType.KING, ChessPieceColor.WHITE);
+                return new MartianChessPiece(MartianChessPieceType.PAWN, ChessPieceColor.BLACK);
             case "q":
-                return new ChessPiece(ChessPieceType.QUEEN, ChessPieceColor.WHITE);
+                return new MartianChessPiece(MartianChessPieceType.QUEEN, ChessPieceColor.WHITE);
+            case "d":
+                return new MartianChessPiece(MartianChessPieceType.DRONE, ChessPieceColor.WHITE);
             case "p":
-                return new ChessPiece(ChessPieceType.PAWN, ChessPieceColor.WHITE);
+                return new MartianChessPiece(MartianChessPieceType.PAWN, ChessPieceColor.WHITE);
             case ".":
                 return null;
         }
         return null;
     }
 
-    public String getStringFromFrield(ChessPiece p) {
+    public String getStringFromFrield(MartianChessPiece p) {
         if (p != null) {
-            ChessPieceType type = p.getType();
+            MartianChessPieceType type = p.getType();
             if (p.getColor() == ChessPieceColor.BLACK) {
                 switch (p.getType()) {
-                    case ROOK:
-                        return "R";
-                    case KNIGHT:
-                        return "N";
-                    case BISHOP:
-                        return "B";
-                    case KING:
-                        return "K";
                     case QUEEN:
                         return "Q";
+                    case DRONE:
+                        return "D";
                     case PAWN:
                         return "P";
                 }
             } else {
                 switch (p.getType()) {
-                    case ROOK:
-                        return "r";
-                    case KNIGHT:
-                        return "n";
-                    case BISHOP:
-                        return "b";
-                    case KING:
-                        return "k";
                     case QUEEN:
                         return "q";
+                    case DRONE:
+                        return "d";
                     case PAWN:
                         return "p";
                 }
@@ -158,7 +135,7 @@ public class ChessBoard extends Board<ChessPiece>{
     }
 
     @Override /* TODO: Logic is cumbersome */
-    public ChessPiece getFieldAt(Point point) {
+    public MartianChessPiece getFieldAt(Point point) {
         if (point.x >= 0 && point.x < this.width && point.y >= 0 && point.y < this.height) {
             if (fields[point.x][point.y] != null) {
                 return fields[point.x][point.y];

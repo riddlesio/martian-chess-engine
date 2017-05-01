@@ -1,9 +1,11 @@
 package io.riddles.martianchess.validator;
 
 import io.riddles.martianchess.game.state.MartianChessState;
-import io.riddles.martianchess.move.ChessMove;
+import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ValidationResult;
 import io.riddles.martianchess.model.*;
+
+import java.awt.*;
 
 /**
  * ${PACKAGE_NAME}
@@ -18,21 +20,32 @@ import io.riddles.martianchess.model.*;
 public class QueenMoveValidator extends ChessPieceMoveValidator implements MoveValidator<MartianChessState> {
 
     @Override
-    public Boolean isApplicable(ChessMove move, MartianChessState state) {
+    public Boolean isApplicable(MartianChessMove move, MartianChessState state) {
 
-        return this.isMovedPieceOfType(move, state.getBoard(), ChessPieceType.QUEEN);
+        return this.isMovedPieceOfType(move, state.getBoard(), MartianChessPieceType.QUEEN);
     }
 
     @Override
-    public ValidationResult validate(ChessMove move, MartianChessState state) {
+    public ValidationResult validate(MartianChessMove move, MartianChessState state) {
 
-        MoveValidator bishopMoveValidator = new BishopMoveValidator();
-        MoveValidator rookMoveValidator = new RookMoveValidator();
+        // Queens move any distance horizontally, vertically, or diagonally, without jumping. (The same as chess queens.)
+        Point from = move.getFrom();
+        Point to = move.getTo();
+        int deltaX = Math.abs(to.x - from.x);
+        int deltaY = Math.abs(to.y - from.y);
 
-        Boolean isValidBishopMove = bishopMoveValidator.validate(move, state).isValid();
-        Boolean isValidRookMove = rookMoveValidator.validate(move, state).isValid();
+        boolean isValid = true;
+        boolean straightMove = false, diagonalMove = false;
 
-        boolean isValid = isValidBishopMove || isValidRookMove;
+        if (deltaX == 0 || deltaY == 0) straightMove = true;
+        if (deltaX == deltaY) diagonalMove = true;
+        if (!straightMove && !diagonalMove)
+            isValid = false;
+
+
+
+
+
         if (isValid) {
             return new ValidationResult(true, "");
         }

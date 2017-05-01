@@ -1,6 +1,6 @@
 package io.riddles.martianchess.game.state;
 
-import io.riddles.martianchess.data.ChessBoard;
+import io.riddles.martianchess.data.MartianChessBoard;
 import io.riddles.javainterface.game.player.PlayerBound;
 import io.riddles.javainterface.game.state.AbstractState;
 
@@ -16,21 +16,21 @@ import java.util.ArrayList;
  *
  * @author Niko
  */
-public final class MartianChessState extends AbstractState<ChessPlayerState> implements PlayerBound {
+public final class MartianChessState extends AbstractState<MartianChessPlayerState> implements PlayerBound {
 
-    private ChessBoard board;
+    private MartianChessBoard board;
     private int playerId;
 
-    public MartianChessState(MartianChessState previousState, ArrayList<ChessPlayerState> playerStates, int roundNumber) {
+    public MartianChessState(MartianChessState previousState, ArrayList<MartianChessPlayerState> playerStates, int roundNumber) {
         super(previousState, playerStates, roundNumber);
         if (previousState != null && previousState.getBoard() != null) {
-            this.board = new ChessBoard(previousState.getBoard());
+            this.board = new MartianChessBoard(previousState.getBoard());
         } else {
         }
     }
 
-    public void setBoard(ChessBoard board) { this.board = board; }
-    public ChessBoard getBoard() { return board; }
+    public void setBoard(MartianChessBoard board) { this.board = board; }
+    public MartianChessBoard getBoard() { return board; }
 
     @Override
     public int getPlayerId() {

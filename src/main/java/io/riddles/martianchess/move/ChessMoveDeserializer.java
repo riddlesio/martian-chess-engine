@@ -32,35 +32,34 @@ import java.awt.*;
  *
  * @author Joost - joost@riddles.io, Jim van Eeden - jim@riddles.io
  */
-public class ChessMoveDeserializer implements Deserializer<ChessMove> {
+public class ChessMoveDeserializer implements Deserializer<MartianChessMove> {
 
 
     public ChessMoveDeserializer() {
     }
 
     @Override
-    public ChessMove traverse(String string) {
+    public MartianChessMove traverse(String string) {
 
         try {
             return visitMove(string);
         } catch (InvalidInputException ex) {
-            return new ChessMove(ex);
+            return new MartianChessMove(ex);
         } catch (Exception ex) {
-            return new ChessMove(new InvalidInputException("Failed to parse move"));
+            return new MartianChessMove(new InvalidInputException("Failed to parse move"));
         }
     }
 
-    private ChessMove visitMove(String input) throws InvalidInputException {
-        input = input.replace(',', ' ');
+    private MartianChessMove visitMove(String input) throws InvalidInputException {
+        input = input.replace(';', ' ');
         String[] split = input.split(" ");
 
-        if (split.length == 2) {
+        if (split.length == 3) {
             MoveType type = visitAssessment(split[0]);
             if (type == MoveType.MOVE) {
-                String move = split[1];
-                Point from = parseCoordinate(move.substring(0,2));
-                Point to = parseCoordinate(move.substring(2,4));
-                return new ChessMove(from, to);
+                Point from = parseCoordinate(split[1]);
+                Point to = parseCoordinate(split[2]);
+                return new MartianChessMove(from, to);
             }
         }
 
@@ -76,10 +75,10 @@ public class ChessMoveDeserializer implements Deserializer<ChessMove> {
         }
     }
 
-    private Point parseCoordinate(String s) {
-        String columnString = s.substring(0,1);
-        int row = 8-Integer.parseInt(s.substring(1,2));
-        int column = columnString.charAt(0)-97;
+    private Point parseCoordinate(String s) { // Notation: 1,5
+        String[] split = s.split(",");
+        int column = Integer.parseInt(split[0]);
+        int row = Integer.parseInt(split[1]);
         return new Point(column, row);
     }
 }
