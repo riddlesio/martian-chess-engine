@@ -49,7 +49,6 @@ public class ChessSerializer extends AbstractGameSerializer<MartianChessProcesso
         MartianChessStateSerializer serializer = new MartianChessStateSerializer();
         JSONArray states = new JSONArray();
 
-        // DIRTY FIX BECAUSE OF THIS STUPID ASS TurnBasedGameLoop
         JSONObject initialJsonState = serializer.traverseToJson(initialState);
         initialJsonState.put("round", initialState.getRoundNumber() - 1);
         states.put(initialJsonState);
@@ -60,7 +59,6 @@ public class ChessSerializer extends AbstractGameSerializer<MartianChessProcesso
             state = (MartianChessState) state.getNextState();
             JSONObject jsonState = serializer.traverseToJson(state);
 
-            // DIRTY FIX BECAUSE OF THIS STUPID ASS TurnBasedGameLoop
             if (counter % 2 == 1) {
                 jsonState.put("round", state.getRoundNumber() - 1);
             }

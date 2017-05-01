@@ -47,7 +47,7 @@ class MartianChessEngineSpec extends Specification {
 
 
 
-    //@Ignore
+    @Ignore
     def "test if MartianChessEngine is created"() {
 
         setup:
@@ -105,7 +105,7 @@ class MartianChessEngineSpec extends Specification {
         processor.getWinnerId(finalState) == null;
     }
 
-    @Ignore
+    //@Ignore
     def "test ToEmptyOrOppositeValidator"() {
 
         setup:
@@ -132,6 +132,35 @@ class MartianChessEngineSpec extends Specification {
         finalState instanceof MartianChessState;
         finalState.getBoard().toString() == "Q,Q,.,D,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,.,.,p,p,d,.,p,d,q,.,d,q,q";
         processor.getWinnerId(finalState) == null;
+    }
+
+    //@Ignore
+    def "test a completed game"() {
+
+        setup:
+        String[] botInputs = new String[2]
+
+        def wrapperInput = "./src/test/resources/wrapper_input.txt"
+        botInputs[0] = "./src/test/resources/bot1_input_game.txt"
+        botInputs[1] = "./src/test/resources/bot2_input_game.txt"
+
+        PlayerProvider<ChessPlayer> playerProvider = new PlayerProvider<>();
+        ChessPlayer player1 = new ChessPlayer(0);
+        player1.setIoHandler(new FileIOHandler(botInputs[0])); playerProvider.add(player1);
+        ChessPlayer player2 = new ChessPlayer(1);
+        player2.setIoHandler(new FileIOHandler(botInputs[1])); playerProvider.add(player2);
+
+        def engine = new TestEngine(playerProvider, wrapperInput)
+
+        AbstractState initialState = engine.willRun()
+        AbstractState finalState = engine.run(initialState);
+        engine.didRun(initialState, finalState);
+        MartianChessProcessor processor = engine.getProcessor();
+
+        expect:
+        finalState instanceof MartianChessState;
+        finalState.getBoard().toString() == ".,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,q,.,.,.,d,q,p,.,d,.,.,.,.,.,.";
+        processor.getWinnerId(finalState) == 1;
     }
 
 }

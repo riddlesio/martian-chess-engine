@@ -13,6 +13,8 @@ import java.awt.*;
  */
 public class MartianChessBoard extends Board<MartianChessPiece>{
     public static final String EMPTY_FIELD = ".";
+    public static final int HALF_TOPHALF = 1;
+    public static final int HALF_BOTTOMHALF = 2;
 
 
     public MartianChessBoard(int width, int height) {
@@ -148,5 +150,23 @@ public class MartianChessBoard extends Board<MartianChessPiece>{
             }
             System.out.print("\n");
         }
+    }
+
+    public int getNrPiecesOnHalf(int half) {
+        int count = 0;
+        if (half == HALF_TOPHALF) {
+            for(int y = 0; y < this.height / 2; y++) {
+                for (int x = 0; x < this.width; x++) {
+                    if (fields[x][y] != null) count++;
+                }
+            }
+        } else {
+            for(int y = this.height / 2; y < this.height; y++) {
+                for (int x = 0; x < this.width; x++) {
+                    if (fields[x][y] != null) count++;
+                }
+            }
+        }
+        return count;
     }
 }

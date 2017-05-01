@@ -17,11 +17,15 @@ public class MartianChessPlayerState extends AbstractPlayerState<MartianChessMov
 
     public MartianChessPlayerState clone() {
         MartianChessPlayerState psClone = new MartianChessPlayerState(this.playerId);
+        psClone.setScore(score);
         return psClone;
     }
 
     public void addPoints(int points) {
         this.score += points;
     }
+
+    public int getScore() { return this.score; }
+    public void setScore(int score) { this.score = score; }
 
 }

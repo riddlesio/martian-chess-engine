@@ -9,15 +9,13 @@ import io.riddles.martianchess.model.ValidationResult;
 import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.validator.MartianChessMoveValidator;
 
-import java.awt.*;
-
 /**
  * Created by joost on 4/21/17.
  */
 public class MartianChessLogic {
     /**
-     * Takes a BlockBattleState and applies the move(s).
-     * Returns nothing, but transforms the given BlockBattleState.
+     * Takes a MartianChessState and applies the move.
+     * Returns nothing, but transforms the given MartianChessState.
      */
     public static void executeMove(MartianChessState state, MartianChessPlayerState playerState) {
         MartianChessBoard board = state.getBoard();
@@ -43,6 +41,7 @@ public class MartianChessLogic {
                         break;
                 }
                 playerState.addPoints(capturePoints);
+                System.out.println("Added score: " + capturePoints + " Total: " + playerState.getScore());
 
             }
             board.move(move.getFrom(), move.getTo());
@@ -53,9 +52,6 @@ public class MartianChessLogic {
             }
 
         }
-        System.out.println("Move " + board.getFieldAt(move.getFrom()) + " to " + move.getTo().getX() + "," + move.getTo().getY() + ": " + vr.isValid() + " "+ vr.getReason());
-
-
     }
 
     public ChessPieceColor getPlayerColor(int playerId) {

@@ -22,6 +22,7 @@ package io.riddles.martianchess.game.state;
 
 import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.javainterface.game.state.AbstractStateSerializer;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -51,8 +52,18 @@ public class MartianChessStateSerializer extends AbstractStateSerializer<Martian
         stateJSON.put("field", state.getBoard().toString());
         stateJSON.put("player", state.getPlayerId());
 
+        JSONArray playersJSON = new JSONArray();
+
+        for (MartianChessPlayerState ps : state.getPlayerStates()) {
+            JSONObject playerJSON = new JSONObject();
+            playerJSON.put("id", ps.getPlayerId());
+            playerJSON.put("score", ps.getScore());
+            playersJSON.put(playerJSON);
+        }
+
 
         stateJSON.put("round", state.getRoundNumber());
+        stateJSON.put("players", playersJSON);
 
         MartianChessMove move = playerState.getMove();
         String exceptionString = "";

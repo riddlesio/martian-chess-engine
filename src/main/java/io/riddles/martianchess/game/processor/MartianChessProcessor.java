@@ -2,6 +2,7 @@ package io.riddles.martianchess.game.processor;
 
 import java.util.ArrayList;
 
+import io.riddles.martianchess.data.MartianChessBoard;
 import io.riddles.martianchess.game.player.ChessPlayer;
 import io.riddles.martianchess.game.state.MartianChessState;
 import io.riddles.martianchess.move.ActionType;
@@ -83,13 +84,41 @@ public class MartianChessProcessor extends PlayerResponseProcessor<MartianChessS
     public boolean hasGameEnded(MartianChessState state) {
         boolean returnVal = false;
         if (state.getRoundNumber() > AbstractEngine.configuration.getInt("maxRounds")) returnVal = true;
+
+        if (state.getPlayerStates().size() == 2) {
+            int boardTopHalfPieces = state.getBoard().getNrPiecesOnHalf(MartianChessBoard.HALF_TOPHALF);
+            int boardBottomHalfPieces = state.getBoard().getNrPiecesOnHalf(MartianChessBoard.HALF_BOTTOMHALF);
+
+            if (boardTopHalfPieces == 0 || boardBottomHalfPieces == 0) {
+                returnVal = true;
+            }
+        } else {
+            /* No implementation for more than two players yet. */
+        }
         return returnVal;
     }
 
     /* Returns winner playerId, or null if there's no winner. */
     @Override
     public Integer getWinnerId(MartianChessState state) {
-        return null;
+        ArrayList<MartianChessPlayerState> playerStates = clonePlayerStates(state.getPlayerStates());
+        ArrayList<MartianChessPlayerState> winners = new ArrayList<>();
+        int maxScore = 0;
+        for(MartianChessPlayerState ps : playerStates) {
+            if (ps.getScore() > maxScore) {
+                maxScore = ps.getScore();
+                winners.clear();
+                winners.add(ps);
+            } else if (ps.getScore() == maxScore) {
+                winners.add(ps);
+            }
+        }
+
+        if (winners.size() == 1) {
+            return winners.get(0).getPlayerId();
+        } else { /* Everyone has the same score */
+            return null;
+        }
     }
 
     @Override
