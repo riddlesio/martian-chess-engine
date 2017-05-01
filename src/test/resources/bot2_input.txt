@@ -1,0 +1,3 @@
+move e7e5
+move b8c6
+move g8f6

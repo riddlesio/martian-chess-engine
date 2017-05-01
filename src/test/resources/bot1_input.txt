@@ -1,0 +1,4 @@
+move e2e4
+move f1c4
+move d1h5
+move h5f7
