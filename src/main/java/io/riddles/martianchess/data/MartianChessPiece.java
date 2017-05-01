@@ -41,6 +41,8 @@ public class MartianChessPiece {
         return this.color;
     }
 
+    public void setColor( ChessPieceColor color) { this.color = color; }
+
     public MartianChessPieceType getType() {
         return this.type;
     }

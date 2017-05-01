@@ -47,8 +47,8 @@ class MartianChessEngineSpec extends Specification {
 
 
 
-    @Ignore
-    def "test if MartianChessEngine is created 1"() {
+    //@Ignore
+    def "test if MartianChessEngine is created"() {
 
         setup:
         String[] botInputs = new String[2]
@@ -76,7 +76,7 @@ class MartianChessEngineSpec extends Specification {
         processor.getWinnerId(finalState) == 0;
     }
 
-    //@Ignore
+    @Ignore
     def "test NoJumpingMoveValidator"() {
 
         setup:
@@ -101,7 +101,37 @@ class MartianChessEngineSpec extends Specification {
 
         expect:
         finalState instanceof MartianChessState;
-        finalState.getBoard().toString() == "Q,Q,.,D,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,q,.,p,p,d,.,p,d,.,.,d,q,q";
+        finalState.getBoard().toString() == "Q,Q,.,D,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,.,.,p,p,d,.,p,d,q,.,d,q,q";
         processor.getWinnerId(finalState) == null;
     }
+
+    @Ignore
+    def "test ToEmptyOrOppositeValidator"() {
+
+        setup:
+        String[] botInputs = new String[2]
+
+        def wrapperInput = "./src/test/resources/wrapper_input_oneround.txt"
+        botInputs[0] = "./src/test/resources/bot_input_toemptyoropposite.txt"
+        botInputs[1] = "./src/test/resources/bot2_input.txt"
+
+        PlayerProvider<ChessPlayer> playerProvider = new PlayerProvider<>();
+        ChessPlayer player1 = new ChessPlayer(0);
+        player1.setIoHandler(new FileIOHandler(botInputs[0])); playerProvider.add(player1);
+        ChessPlayer player2 = new ChessPlayer(1);
+        player2.setIoHandler(new FileIOHandler(botInputs[1])); playerProvider.add(player2);
+
+        def engine = new TestEngine(playerProvider, wrapperInput)
+
+        AbstractState initialState = engine.willRun()
+        AbstractState finalState = engine.run(initialState);
+        engine.didRun(initialState, finalState);
+        MartianChessProcessor processor = engine.getProcessor();
+
+        expect:
+        finalState instanceof MartianChessState;
+        finalState.getBoard().toString() == "Q,Q,.,D,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,.,.,p,p,d,.,p,d,q,.,d,q,q";
+        processor.getWinnerId(finalState) == null;
+    }
+
 }

@@ -125,13 +125,9 @@ public class MartianChessBoard extends Board<MartianChessPiece>{
         return s;
     }
 
-    public boolean move(Point from, Point to) {
-        if (fields[to.x][to.y] == null) {
-            fields[to.x][to.y] = fields[from.x][from.y];
-            fields[from.x][from.y] = null;
-            return true;
-        }
-        return false;
+    public void move(Point from, Point to) {
+        fields[to.x][to.y] = fields[from.x][from.y];
+        fields[from.x][from.y] = null;
     }
 
     @Override /* TODO: Logic is cumbersome */
@@ -142,7 +138,6 @@ public class MartianChessBoard extends Board<MartianChessPiece>{
             }
         }
         return null;
-
     }
 
     @Override

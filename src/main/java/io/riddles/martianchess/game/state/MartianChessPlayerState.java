@@ -8,6 +8,8 @@ import io.riddles.javainterface.game.state.AbstractPlayerState;
  */
 public class MartianChessPlayerState extends AbstractPlayerState<MartianChessMove> {
 
+    int score = 0;
+
     public MartianChessPlayerState(int playerId) {
         super(playerId);
 
@@ -16,6 +18,10 @@ public class MartianChessPlayerState extends AbstractPlayerState<MartianChessMov
     public MartianChessPlayerState clone() {
         MartianChessPlayerState psClone = new MartianChessPlayerState(this.playerId);
         return psClone;
+    }
+
+    public void addPoints(int points) {
+        this.score += points;
     }
 
 }

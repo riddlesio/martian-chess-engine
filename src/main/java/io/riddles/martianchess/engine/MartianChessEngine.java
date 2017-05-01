@@ -46,9 +46,10 @@ public class MartianChessEngine extends AbstractEngine<MartianChessProcessor, Ch
     @Override
     protected Configuration getDefaultConfiguration() {
         Configuration configuration = new Configuration();
-        configuration.put("maxRounds", 200); /* Note: in the previous version of Block Battle, maxRounds was set to -1 */
+        configuration.put("maxRounds", 200);
         configuration.put("field_height", 8);
         configuration.put("field_width", 4);
+        configuration.put("start_field", "Q,Q,D,.,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,.,.,p,p,d,.,p,d,q,.,d,q,q");
         return configuration;
     }
 
@@ -102,15 +103,7 @@ public class MartianChessEngine extends AbstractEngine<MartianChessProcessor, Ch
     protected MartianChessState getInitialState() {
         ArrayList<MartianChessPlayerState> playerStates = new ArrayList<>();
         MartianChessBoard board = new MartianChessBoard(configuration.getInt("fieldWidth"), (configuration.getInt("fieldHeight")));
-        board.setFieldsFromString(
-                "Q,Q,D,.," +
-                "Q,D,P,.," +
-                "D,P,P,.," +
-                ".,.,.,.," +
-                ".,.,.,.," +
-                ".,p,p,d," +
-                ".,p,d,q," +
-                ".,d,q,q" );
+        board.setFieldsFromString(configuration.getString("start_field"));
 
         for (ChessPlayer player : playerProvider.getPlayers()) {
             MartianChessPlayerState playerState = new MartianChessPlayerState(player.getId());

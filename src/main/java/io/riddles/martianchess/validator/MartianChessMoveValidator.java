@@ -19,11 +19,11 @@ import java.util.ArrayList;
  *
  * @author Niko
  */
-public final class ChessMoveValidator implements MoveValidator<MartianChessState> {
+public final class MartianChessMoveValidator implements MoveValidator<MartianChessState> {
 
     private ArrayList<MoveValidator> validators;
 
-    public ChessMoveValidator() {
+    public MartianChessMoveValidator() {
 
         ArrayList<MoveValidator> validators = new ArrayList<>();
 
@@ -33,6 +33,7 @@ public final class ChessMoveValidator implements MoveValidator<MartianChessState
         validators.add(new DroneMoveValidator());
         validators.add(new PawnMoveValidator());
         validators.add(new QueenMoveValidator());
+        validators.add(new NoJumpingMoveValidator());
 
         this.validators = validators;
     }

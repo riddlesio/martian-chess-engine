@@ -33,8 +33,8 @@ public class NoJumpingMoveValidator extends ChessPieceMoveValidator implements M
         Board board = state.getBoard();
 
         Point intermediate = new Point(from.x, from.y);
-        int deltaX = to.x - from.x;
-        int deltaY = to.y - from.y;
+        int deltaX = Math.abs(to.x - from.x);
+        int deltaY = Math.abs(to.y - from.y);
 
         boolean isValid = true;
 
@@ -51,7 +51,7 @@ public class NoJumpingMoveValidator extends ChessPieceMoveValidator implements M
             if (intermediate.y > to.getY())
                 intermediate.y = intermediate.y - 1;
 
-            if (intermediate.x != to.x && intermediate.y != to.y) {
+            if (intermediate.x != to.x || intermediate.y != to.y) {
                 if (board.getFieldAt(intermediate) != null)
                     isValid = false;
             }
