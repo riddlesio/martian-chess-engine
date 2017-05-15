@@ -25,7 +25,7 @@ artifactory {
     }
 }
 
-mainClassName = 'io.riddles.martianchess.Chess'
+mainClassName = 'io.riddles.martianchess.MartianChess'
 
 sourceSets {
     main {
@@ -42,6 +42,18 @@ sourceSets {
         resources {
             srcDir 'src/test/resources'
         }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Martian Chess Game Engine',
+                'Implementation-Version': version,
+                'Main-Class': mainClassName
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 

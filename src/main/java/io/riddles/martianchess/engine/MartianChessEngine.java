@@ -106,7 +106,7 @@ public class MartianChessEngine extends AbstractEngine<MartianChessProcessor, Ch
     protected MartianChessState getInitialState() {
 
         ArrayList<MartianChessPlayerState> playerStates = new ArrayList<>();
-        MartianChessBoard board = new MartianChessBoard(configuration.getInt("fieldWidth"), (configuration.getInt("fieldHeight")));
+        MartianChessBoard board = new MartianChessBoard(configuration.getInt("field_width"), (configuration.getInt("field_height")));
         board.setFieldsFromString(configuration.getString("start_field"));
 
         for (ChessPlayer player : playerProvider.getPlayers()) {

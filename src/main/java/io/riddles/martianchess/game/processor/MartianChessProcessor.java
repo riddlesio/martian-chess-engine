@@ -54,7 +54,7 @@ public class MartianChessProcessor extends PlayerResponseProcessor<MartianChessS
         MartianChessLogic logic = new MartianChessLogic();
         MartianChessLogic.executeMove(nextState, playerState);
 
-        nextState.getBoard().dump();
+        //nextState.getBoard().dump();
 
         nextState.setPlayerstates(nextPlayerStates);
         return nextState;

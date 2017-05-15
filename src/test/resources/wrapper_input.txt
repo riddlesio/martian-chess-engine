@@ -1,5 +1,5 @@
 initialize
-configuration {"maxRounds":{"type":"integer","value":30},"fieldWidth":{"type":"integer","value":4},"fieldHeight":{"type":"integer","value":8},"start_field":{"type":"string","value":"Q,Q,D,.,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,.,.,p,p,d,.,p,d,q,.,d,q,q"}}}
+configuration {"maxRounds":{"type":"integer","value":30},"field_width":{"type":"integer","value":4},"field_height":{"type":"integer","value":8},"start_field":{"type":"string","value":"Q,Q,D,.,Q,D,P,.,D,P,P,.,.,.,.,.,.,.,.,.,.,p,p,d,.,p,d,q,.,d,q,q"}}}
 start
 details
 game
