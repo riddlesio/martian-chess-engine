@@ -31,20 +31,22 @@ import java.util.ArrayList;
 public class MartianChessEngine extends AbstractEngine<MartianChessProcessor, ChessPlayer, MartianChessState> {
 
     public MartianChessEngine(PlayerProvider<ChessPlayer> playerProvider, IOHandler ioHandler) throws TerminalException {
+
         super(playerProvider, ioHandler);
     }
 
     /* createPlayer creates and initialises a Player for the game.
- * returns: a Player
- */
+     * returns: a Player
+     */
     @Override
     protected ChessPlayer createPlayer(int id) {
-        ChessPlayer p = new ChessPlayer(id);
-        return p;
+
+        return new ChessPlayer(id);
     }
 
     @Override
     protected Configuration getDefaultConfiguration() {
+
         Configuration configuration = new Configuration();
         configuration.put("maxRounds", 200);
         configuration.put("field_height", 8);
@@ -92,6 +94,7 @@ public class MartianChessEngine extends AbstractEngine<MartianChessProcessor, Ch
      */
     @Override
     protected String getPlayedGame(MartianChessState state) {
+
         ChessSerializer serializer = new ChessSerializer();
         return serializer.traverseToString(this.processor, state);
     }
@@ -101,6 +104,7 @@ public class MartianChessEngine extends AbstractEngine<MartianChessProcessor, Ch
      */
     @Override
     protected MartianChessState getInitialState() {
+
         ArrayList<MartianChessPlayerState> playerStates = new ArrayList<>();
         MartianChessBoard board = new MartianChessBoard(configuration.getInt("fieldWidth"), (configuration.getInt("fieldHeight")));
         board.setFieldsFromString(configuration.getString("start_field"));

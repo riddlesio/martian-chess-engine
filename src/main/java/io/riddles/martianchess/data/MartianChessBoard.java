@@ -1,7 +1,6 @@
 package io.riddles.martianchess.data;
 
 import io.riddles.martianchess.model.ChessPieceColor;
-import io.riddles.martianchess.model.ChessPieceType;
 import io.riddles.javainterface.game.data.Board;
 import io.riddles.martianchess.model.MartianChessPieceType;
 
@@ -9,7 +8,14 @@ import java.awt.*;
 
 
 /**
- * Created by joost on 4/18/17.
+ * ${PACKAGE_NAME}
+ *
+ * This file is a part of martianchess
+ *
+ * Copyright 2016 - present Riddles.io
+ * For license information see the LICENSE file in the project root
+ *
+ * @author Niko
  */
 public class MartianChessBoard extends Board<MartianChessPiece>{
     public static final String EMPTY_FIELD = ".";
@@ -36,7 +42,6 @@ public class MartianChessBoard extends Board<MartianChessPiece>{
         super(board.getWidth(), board.getHeight());
         fields = new MartianChessPiece[width][height];
         clear();
-        /* TODO: Clone better. */
         setFieldsFromString(board.toString());
     }
 
@@ -87,9 +92,8 @@ public class MartianChessBoard extends Board<MartianChessPiece>{
         return null;
     }
 
-    public String getStringFromFrield(MartianChessPiece p) {
+    private String getStringFromField(MartianChessPiece p) {
         if (p != null) {
-            MartianChessPieceType type = p.getType();
             if (p.getColor() == ChessPieceColor.BLACK) {
                 switch (p.getType()) {
                     case QUEEN:
@@ -120,7 +124,7 @@ public class MartianChessBoard extends Board<MartianChessPiece>{
             for(int x = 0; x < this.width; x++) {
                 if (counter > 0)
                     s += ",";
-                s += getStringFromFrield(this.fields[x][y]);
+                s += getStringFromField(this.fields[x][y]);
                 counter++;
             }
         }
@@ -146,7 +150,7 @@ public class MartianChessBoard extends Board<MartianChessPiece>{
     public void dump() {
         for(int y = 0; y < this.height; y++) {
             for(int x = 0; x < this.width; x++) {
-                System.out.print(getStringFromFrield(fields[x][y]));
+                System.out.print(getStringFromField(fields[x][y]));
             }
             System.out.print("\n");
         }

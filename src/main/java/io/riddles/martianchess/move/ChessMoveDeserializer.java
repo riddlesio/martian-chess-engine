@@ -68,7 +68,7 @@ public class ChessMoveDeserializer implements Deserializer<MartianChessMove> {
 
     private MoveType visitAssessment(String input) throws InvalidInputException {
         switch (input) {
-            case "move": /* TODO: Use Chess notation */
+            case "move":
                 return MoveType.MOVE;
             default:
                 throw new InvalidInputException("Move isn't valid");

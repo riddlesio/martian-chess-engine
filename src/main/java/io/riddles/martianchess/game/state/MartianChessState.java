@@ -25,7 +25,6 @@ public final class MartianChessState extends AbstractState<MartianChessPlayerSta
         super(previousState, playerStates, roundNumber);
         if (previousState != null && previousState.getBoard() != null) {
             this.board = new MartianChessBoard(previousState.getBoard());
-        } else {
         }
     }
 

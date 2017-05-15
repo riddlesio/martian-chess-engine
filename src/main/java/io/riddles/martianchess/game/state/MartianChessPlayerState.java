@@ -4,11 +4,18 @@ import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.javainterface.game.state.AbstractPlayerState;
 
 /**
- * Created by joost on 4/18/17.
+ * ${PACKAGE_NAME}
+ *
+ * This file is a part of martianchess
+ *
+ * Copyright 2016 - present Riddles.io
+ * For license information see the LICENSE file in the project root
+ *
+ * @author Niko
  */
 public class MartianChessPlayerState extends AbstractPlayerState<MartianChessMove> {
 
-    int score = 0;
+    private int score = 0;
 
     public MartianChessPlayerState(int playerId) {
         super(playerId);
@@ -16,6 +23,7 @@ public class MartianChessPlayerState extends AbstractPlayerState<MartianChessMov
     }
 
     public MartianChessPlayerState clone() {
+
         MartianChessPlayerState psClone = new MartianChessPlayerState(this.playerId);
         psClone.setScore(score);
         return psClone;

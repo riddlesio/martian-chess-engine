@@ -2,9 +2,9 @@ package io.riddles.martianchess.validator;
 
 import io.riddles.martianchess.data.MartianChessPiece;
 import io.riddles.martianchess.game.state.MartianChessState;
+import io.riddles.martianchess.model.ChessPieceColor;
 import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ValidationResult;
-import io.riddles.martianchess.model.*;
 
 /**
  * ${PACKAGE_NAME}
@@ -36,7 +36,7 @@ public class ChessPieceColorValidator extends ChessPieceMoveValidator implements
     }
 
 
-    public ChessPieceColor getPlayerColor(int playerId) {
+    private ChessPieceColor getPlayerColor(int playerId) {
         return (playerId == 0) ? ChessPieceColor.WHITE : ChessPieceColor.BLACK;
     }
 }

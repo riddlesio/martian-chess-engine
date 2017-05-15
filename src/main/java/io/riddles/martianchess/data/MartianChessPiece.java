@@ -14,8 +14,8 @@ import io.riddles.martianchess.model.MartianChessPieceType;
  * @author Niko
  */
 public class MartianChessPiece {
-    MartianChessPieceType type;
-    ChessPieceColor color;
+    private MartianChessPieceType type;
+    private ChessPieceColor color;
     private boolean hasMoved;
 
     public MartianChessPiece(MartianChessPieceType type, ChessPieceColor color) {

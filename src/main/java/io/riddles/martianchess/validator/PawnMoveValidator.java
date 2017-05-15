@@ -3,7 +3,6 @@ package io.riddles.martianchess.validator;
 import io.riddles.martianchess.data.MartianChessPiece;
 import io.riddles.martianchess.game.state.MartianChessState;
 import io.riddles.martianchess.model.ChessPieceColor;
-import io.riddles.martianchess.model.ChessPieceType;
 import io.riddles.martianchess.model.MartianChessPieceType;
 import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ValidationResult;
@@ -18,7 +17,7 @@ import java.awt.*;
  * Copyright 2016 - present Riddles.io
  * For license information see the LICENSE file in the project root
  *
- * @author Niko
+ * @author Joost
  */
 public class PawnMoveValidator extends ChessPieceMoveValidator implements MoveValidator<MartianChessState> {
 
@@ -39,8 +38,7 @@ public class PawnMoveValidator extends ChessPieceMoveValidator implements MoveVa
         int deltaX = Math.abs(to.x - from.x);
         int deltaY = Math.abs(to.y - from.y);
 
-        MartianChessPiece chessPiece = (MartianChessPiece) state.getBoard().getFieldAt(from);
-        ChessPieceColor pieceColor = chessPiece.getColor();
+        MartianChessPiece chessPiece = state.getBoard().getFieldAt(from);
 
         boolean isValid = false;
 

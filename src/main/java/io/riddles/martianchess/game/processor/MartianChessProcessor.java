@@ -18,7 +18,10 @@ import io.riddles.javainterface.io.PlayerResponse;
 /**
  * io.riddles.MartianChess.game.processor.MartianChessProcessor - Created on 6/27/16
  *
- * [description]
+ * This file is a part of martianchess
+ *
+ * Copyright 2016 - present Riddles.io
+ * For license information see the LICENSE file in the project root
  *
  * @author Joost - joost@riddles.io, Jim van Eeden - jim@riddles.io
  */
@@ -39,8 +42,9 @@ public class MartianChessProcessor extends PlayerResponseProcessor<MartianChessS
         ChessMoveDeserializer moveDeserializer = new ChessMoveDeserializer();
         MartianChessMove move = moveDeserializer.traverse(input.getValue());
         MartianChessPlayerState playerState = getActivePlayerState(nextPlayerStates, input.getPlayerId());
-        playerState.setMove(move);
-
+        if (playerState != null) {
+            playerState.setMove(move);
+        }
 
         // parse the response
         if (move.getException() != null) {
@@ -48,11 +52,11 @@ public class MartianChessProcessor extends PlayerResponseProcessor<MartianChessS
         }
 
         MartianChessLogic logic = new MartianChessLogic();
-        logic.executeMove(nextState, playerState);
+        MartianChessLogic.executeMove(nextState, playerState);
 
         nextState.getBoard().dump();
 
-        nextState.setPlayerstates((ArrayList)nextPlayerStates);
+        nextState.setPlayerstates(nextPlayerStates);
         return nextState;
     }
 
@@ -93,7 +97,7 @@ public class MartianChessProcessor extends PlayerResponseProcessor<MartianChessS
                 returnVal = true;
             }
         } else {
-            /* No implementation for more than two players yet. */
+            return true;
         }
         return returnVal;
     }

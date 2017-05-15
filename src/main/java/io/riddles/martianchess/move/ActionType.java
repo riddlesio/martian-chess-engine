@@ -27,5 +27,5 @@ package io.riddles.martianchess.move;
  * @author Joost de Meij - joost@riddles.io, Jim van Eeden - jim@riddles.io
  */
 public enum ActionType {
-    MOVE;
+    MOVE
 }

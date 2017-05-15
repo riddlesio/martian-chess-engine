@@ -1,9 +1,9 @@
 package io.riddles.martianchess.validator;
 
 import io.riddles.martianchess.game.state.MartianChessState;
+import io.riddles.martianchess.model.MartianChessPieceType;
 import io.riddles.martianchess.move.MartianChessMove;
 import io.riddles.martianchess.model.ValidationResult;
-import io.riddles.martianchess.model.*;
 
 import java.awt.*;
 

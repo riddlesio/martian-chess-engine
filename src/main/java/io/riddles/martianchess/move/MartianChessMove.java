@@ -1,6 +1,5 @@
 package io.riddles.martianchess.move;
 
-import io.riddles.martianchess.model.ChessPieceType;
 import io.riddles.javainterface.game.move.AbstractMove;
 
 import java.awt.*;
